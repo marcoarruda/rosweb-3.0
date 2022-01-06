@@ -7,7 +7,7 @@ import ConnectionContext, {
 
 interface IConnectionContextAction {
   type: "CONNECT" | "DISCONNECT";
-  payload?: WebSocket;
+  payload: WebSocket | null;
 }
 
 const defaultConnectionState: IConnectionContextState = {
@@ -17,7 +17,13 @@ const defaultConnectionState: IConnectionContextState = {
 const connectionReducer: Reducer<
   IConnectionContextState,
   IConnectionContextAction
-> = (_state: IConnectionContextState, _action: IConnectionContextAction) => {
+> = (_state: IConnectionContextState, action: IConnectionContextAction) => {
+  switch (action.type) {
+    case "CONNECT":
+      return { connection: action.payload, isConnected: true };
+    case "DISCONNECT":
+      return { connection: null, isConnected: false };
+  }
   return defaultConnectionState;
 };
 
@@ -37,14 +43,17 @@ const ConnectionProvider = (props: any) => {
       });
     };
     connection.onclose = connection.onerror = (ev) => {
-      console.log(ev)
+      console.log(ev);
       dispatchConnectionAction({
-        type: "DISCONNECT"
+        type: "DISCONNECT",
+        payload: null,
       });
     };
   };
 
-  const disconnectHandler = () => {};
+  const disconnectHandler = () => {
+    connectionState.connection?.close();
+  };
 
   // This is "mapped" to the context consumer
   const connectionContext: IConnectionContext = {
