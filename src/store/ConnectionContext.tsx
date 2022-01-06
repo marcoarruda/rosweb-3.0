@@ -2,6 +2,7 @@ import React from "react";
 
 export interface IConnectionContextState {
   connection: WebSocket | null;
+  isLoading: boolean,
   isConnected: boolean;
 }
 
@@ -12,6 +13,7 @@ export interface IConnectionContext extends IConnectionContextState {
 
 const defaultState: IConnectionContext = {
   connection: null,
+  isLoading: false,
   isConnected: false,
   connect: (url: String) => {},
   disconnect: () => {},
