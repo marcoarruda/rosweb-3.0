@@ -47,14 +47,12 @@ const ConnectionProvider = (props: any) => {
       payload: null,
     });
     connection.onopen = (ev) => {
-      console.log(ev);
       dispatchConnectionAction({
         type: "CONNECT",
         payload: connection,
       });
     };
     connection.onclose = connection.onerror = (ev) => {
-      console.log(ev);
       dispatchConnectionAction({
         type: "DISCONNECT",
         payload: null,

@@ -16,11 +16,12 @@ function ConnectionForm() {
     <form name="connector-form" onSubmit={connectorOnSubmitHandler}>
       <label>Rosbridge address</label>
       <input
+        disabled={connCtx.isLoading || connCtx.isConnected}
         type="url"
         name="rosbridge-address"
         style={{ marginLeft: "10px" }}
       />
-      <button type="submit" style={{ marginLeft: "10px" }}>
+      <button disabled={connCtx.isLoading} type="submit" style={{ marginLeft: "10px" }}>
         {btnText}
       </button>
     </form>
