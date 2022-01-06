@@ -1,7 +1,8 @@
 import React from "react";
+import { Ros } from "roslib";
 
 export interface IConnectionContextState {
-  connection: WebSocket | null;
+  connection: Ros | null;
   isLoading: boolean,
   isConnected: boolean;
 }

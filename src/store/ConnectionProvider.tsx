@@ -1,5 +1,7 @@
 import React, { Reducer, useReducer } from "react";
 
+import { Ros } from "roslib";
+
 import ConnectionContext, {
   IConnectionContextState,
   IConnectionContext,
@@ -7,7 +9,7 @@ import ConnectionContext, {
 
 interface IConnectionContextAction {
   type: "CONNECT" | "DISCONNECT" | "LOADING";
-  payload: WebSocket | null;
+  payload: Ros | null;
 }
 
 const defaultConnectionState: IConnectionContextState = {
@@ -41,23 +43,26 @@ const ConnectionProvider = (props: any) => {
   );
 
   const connectHandler = (url: string) => {
-    const connection = new WebSocket(url);
+    const connection = new Ros({ url });
     dispatchConnectionAction({
       type: "LOADING",
       payload: null,
     });
-    connection.onopen = (ev) => {
+    const onConnectionHandler = (_event: Event) => {
       dispatchConnectionAction({
         type: "CONNECT",
         payload: connection,
       });
-    };
-    connection.onclose = connection.onerror = (ev) => {
+    }
+    const closeErrorHandler = (_event: Event) => {
       dispatchConnectionAction({
         type: "DISCONNECT",
         payload: null,
       });
-    };
+    }
+    connection.on('connection', onConnectionHandler);
+    connection.on('close', closeErrorHandler);
+    connection.on('error', closeErrorHandler);
   };
 
   const disconnectHandler = () => {
