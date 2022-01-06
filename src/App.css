@@ -1,5 +1,4 @@
 .App {
-  text-align: center;
 }
 
 .App-header {
@@ -9,13 +8,13 @@
   flex-direction: row;
   align-items: center;
   justify-content: space-between;
-  font-size: calc(10px + 2vmin);
   color: white;
 }
 .App-header a {
   padding: 0 10px;
   color: white;
   text-decoration: none;
+  font-size: calc(10px + 2vmin);
   flex-shrink: 1;
 }
 
