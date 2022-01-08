@@ -1,14 +1,29 @@
-import React, { useContext } from "react";
+import React, { useContext, useState } from "react";
+import useInput from "../hooks/use-input";
 
 import ConnectionContext from "../store/ConnectionContext";
 
+import { websocketRegex } from "../validators/index";
+
 function ConnectionForm() {
   const connCtx = useContext(ConnectionContext);
+
+  const {
+    value: address,
+    valueIsValid: addressIsValid,
+    hasError: addressHasError,
+    inputChangeHandler: addressChangeHandler,
+    inputBlurHandler: addressBlurHandler,
+    reset: addressReset
+  } = useInput((value) => websocketRegex.test(value));
+
   const connectorOnSubmitHandler = (event: React.FormEvent): any => {
-    const url = 'wss://demo.piesocket.com/v3/channel_1?api_key=oCdCMcMPQpbvNjUIzqtvF1d2X2okWpDQj4AwARJuAgtjhzKxVEjQU6IdCjwm&notify_self'
-    connCtx.isConnected ? connCtx.disconnect() : connCtx.connect(url)
+    const url = address;
+    connCtx.isConnected ? connCtx.disconnect() : connCtx.connect(url);
     event.preventDefault();
   };
+
+  const isFormValid = addressIsValid;
 
   const btnText = !connCtx.isConnected ? "Connect" : "Disconnect";
 
@@ -18,10 +33,17 @@ function ConnectionForm() {
       <input
         disabled={connCtx.isLoading || connCtx.isConnected}
         type="url"
+        value={address}
+        onChange={addressChangeHandler}
+        onBlur={addressBlurHandler}
         name="rosbridge-address"
         style={{ marginLeft: "10px" }}
       />
-      <button disabled={connCtx.isLoading} type="submit" style={{ marginLeft: "10px" }}>
+      <button
+        disabled={connCtx.isLoading || !isFormValid}
+        type="submit"
+        style={{ marginLeft: "10px" }}
+      >
         {btnText}
       </button>
     </form>
