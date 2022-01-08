@@ -1,4 +1,4 @@
-import React, { useContext, useState } from "react";
+import React, { useContext } from "react";
 import useInput from "../hooks/use-input";
 
 import ConnectionContext from "../store/ConnectionContext";
@@ -14,7 +14,7 @@ function ConnectionForm() {
     hasError: addressHasError,
     inputChangeHandler: addressChangeHandler,
     inputBlurHandler: addressBlurHandler,
-    reset: addressReset
+    // reset: addressReset
   } = useInput((value) => websocketRegex.test(value));
 
   const connectorOnSubmitHandler = (event: React.FormEvent): any => {
@@ -46,6 +46,7 @@ function ConnectionForm() {
       >
         {btnText}
       </button>
+      { addressHasError && <span style={{color: 'red'}}> Must be a valid websocket address</span> }
     </form>
   );
 }
