@@ -1,9 +1,9 @@
-import React from "react";
-import { Ros } from "roslib";
+import React from 'react';
+import { Ros } from 'roslib';
 
 export interface IConnectionContextState {
   connection: Ros | null;
-  isLoading: boolean,
+  isLoading: boolean;
   isConnected: boolean;
 }
 

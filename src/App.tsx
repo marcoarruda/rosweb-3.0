@@ -1,10 +1,10 @@
-import React from "react";
-import "./App.css";
+import React from 'react';
+import './App.css';
 
-import ConnectionForm from "./components/ConnectionForm";
-import ConnectionStatus from "./components/ConnectionStatus";
+import ConnectionForm from './components/ConnectionForm';
+import ConnectionStatus from './components/ConnectionStatus';
 
-import ConnectionProvider from "./store/ConnectionProvider";
+import ConnectionProvider from './store/ConnectionProvider';
 
 function App() {
   return (
