@@ -1,9 +1,9 @@
 import React, { useContext } from 'react';
-import useInput from '../hooks/use-input';
+import useInput from 'hooks/use-input';
 
-import ConnectionContext from '../store/ConnectionContext';
+import ConnectionContext from 'store/ConnectionContext';
 
-import { websocketRegex } from '../validators/index';
+import { websocketRegex } from 'validators/index';
 
 function ConnectionForm() {
   const connCtx = useContext(ConnectionContext);

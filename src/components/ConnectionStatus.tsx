@@ -1,6 +1,6 @@
 import React, { useContext } from 'react';
 
-import ConnectionContext from '../store/ConnectionContext';
+import ConnectionContext from 'store/ConnectionContext';
 
 function ConnectionStatus() {
   const connCtx = useContext(ConnectionContext);
