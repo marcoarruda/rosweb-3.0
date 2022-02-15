@@ -1,11 +1,11 @@
 import React, { useContext } from 'react';
-import useInput from 'hooks/use-input';
 
 import ConnectionContext from 'store/ConnectionContext';
 
-import { websocketRegex } from 'validators/index';
+import { websocketRegex } from 'common/validators';
+import useInput from 'common/hooks/use-input';
 
-function ConnectionForm() {
+export const ConnectionForm = () => {
   const connCtx = useContext(ConnectionContext);
 
   const {
@@ -51,6 +51,4 @@ function ConnectionForm() {
       )}
     </form>
   );
-}
-
-export default ConnectionForm;
+};

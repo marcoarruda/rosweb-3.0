@@ -2,7 +2,7 @@ import React, { useContext } from 'react';
 
 import ConnectionContext from 'store/ConnectionContext';
 
-function ConnectionStatus() {
+export const ConnectionStatus = () => {
   const connCtx = useContext(ConnectionContext);
 
   let statusText: JSX.Element;
@@ -17,6 +17,4 @@ function ConnectionStatus() {
   }
 
   return <div style={{ padding: '0 20px' }}>{statusText}</div>;
-}
-
-export default ConnectionStatus;
+};
