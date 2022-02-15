@@ -1,11 +1,11 @@
-import React, { useContext } from "react";
-import useInput from "../hooks/use-input";
+import React, { useContext } from 'react';
 
-import ConnectionContext from "../store/ConnectionContext";
+import ConnectionContext from 'store/ConnectionContext';
 
-import { websocketRegex } from "../validators/index";
+import { websocketRegex } from 'common/validators';
+import useInput from 'common/hooks/use-input';
 
-function ConnectionForm() {
+export const ConnectionForm = () => {
   const connCtx = useContext(ConnectionContext);
 
   const {
@@ -25,7 +25,7 @@ function ConnectionForm() {
 
   const isFormValid = addressIsValid;
 
-  const btnText = !connCtx.isConnected ? "Connect" : "Disconnect";
+  const btnText = !connCtx.isConnected ? 'Connect' : 'Disconnect';
 
   return (
     <form name="connector-form" onSubmit={connectorOnSubmitHandler}>
@@ -37,18 +37,18 @@ function ConnectionForm() {
         onChange={addressChangeHandler}
         onBlur={addressBlurHandler}
         name="rosbridge-address"
-        style={{ marginLeft: "10px" }}
+        style={{ marginLeft: '10px' }}
       />
       <button
         disabled={connCtx.isLoading || !isFormValid}
         type="submit"
-        style={{ marginLeft: "10px" }}
+        style={{ marginLeft: '10px' }}
       >
         {btnText}
       </button>
-      { addressHasError && <span style={{color: 'red'}}> Must be a valid websocket address</span> }
+      {addressHasError && (
+        <span style={{ color: 'red' }}> Must be a valid websocket address</span>
+      )}
     </form>
   );
-}
-
-export default ConnectionForm;
+};

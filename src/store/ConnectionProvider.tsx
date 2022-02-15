@@ -3,21 +3,21 @@ import React, {
   ReactNode,
   Reducer,
   useReducer,
-} from "react";
+} from 'react';
 
-import { Ros } from "roslib";
+import { Ros } from 'roslib';
 
 import ConnectionContext, {
   IConnectionContextState,
   IConnectionContext,
-} from "./ConnectionContext";
+} from './ConnectionContext';
 
 interface IConnectionContextActionConnect {
-  type: "CONNECT";
+  type: 'CONNECT';
   payload: Ros | null;
 }
 interface IConnectionContextAction {
-  type: "DISCONNECT" | "LOADING";
+  type: 'DISCONNECT' | 'LOADING';
 }
 
 const defaultConnectionState: IConnectionContextState = {
@@ -30,15 +30,15 @@ const connectionReducer: Reducer<
   IConnectionContextAction | IConnectionContextActionConnect
 > = (_state, action) => {
   switch (action.type) {
-    case "LOADING":
+    case 'LOADING':
       return { connection: null, isConnected: false, isLoading: true };
-    case "CONNECT":
+    case 'CONNECT':
       return {
         connection: action.payload,
         isConnected: true,
         isLoading: false,
       };
-    case "DISCONNECT":
+    case 'DISCONNECT':
       return { connection: null, isConnected: false, isLoading: false };
   }
   return defaultConnectionState;
@@ -53,38 +53,38 @@ const ConnectionProvider = (props: PropsWithChildren<ReactNode>) => {
   const connectHandler = (url: string) => {
     const connection = new Ros({ url });
     dispatchConnectionAction({
-      type: "LOADING",
+      type: 'LOADING',
     });
     const onConnectionHandler = (event: Event) => {
       dispatchConnectionAction({
-        type: "CONNECT",
+        type: 'CONNECT',
         payload: connection,
       });
     };
     const onErrorHandler = (event: Event) => {
       dispatchConnectionAction({
-        type: "DISCONNECT",
+        type: 'DISCONNECT',
       });
     };
     const onCloseHandler = (event: Event) => {
       dispatchConnectionAction({
-        type: "DISCONNECT",
+        type: 'DISCONNECT',
       });
     };
-    connection.on("connection", onConnectionHandler);
-    connection.on("error", onErrorHandler);
-    connection.on("close", onCloseHandler);
+    connection.on('connection', onConnectionHandler);
+    connection.on('error', onErrorHandler);
+    connection.on('close', onCloseHandler);
   };
 
   const disconnectHandler = () => {
     dispatchConnectionAction({
-      type: "LOADING",
+      type: 'LOADING',
     });
     if (connectionState.connection) {
       connectionState.connection.close();
     } else {
       dispatchConnectionAction({
-        type: "DISCONNECT",
+        type: 'DISCONNECT',
       });
     }
   };

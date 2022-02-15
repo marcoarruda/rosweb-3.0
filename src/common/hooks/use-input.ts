@@ -1,15 +1,15 @@
-import React, { Reducer, useReducer } from "react";
+import React, { Reducer, useReducer } from 'react';
 
 interface IInputState {
   value: string;
   isTouched: Boolean;
 }
 interface IInputActionInput {
-  type: "INPUT";
+  type: 'INPUT';
   value: string;
 }
 interface IInputAction {
-  type: "BLUR" | "RESET";
+  type: 'BLUR' | 'RESET';
 }
 interface IValidatorFn {
   (value: string): Boolean;
@@ -27,20 +27,20 @@ interface IUseInput {
 }
 
 const initialInputState: IInputState = {
-  value: "",
+  value: '',
   isTouched: false,
 };
-const inputStateReducer: Reducer<IInputState, IInputActionInput | IInputAction> = (
-  state,
-  action
-) => {
+const inputStateReducer: Reducer<
+  IInputState,
+  IInputActionInput | IInputAction
+> = (state, action) => {
   switch (action.type) {
-    case "INPUT":
+    case 'INPUT':
       return { value: action.value, isTouched: state.isTouched };
-    case "BLUR":
+    case 'BLUR':
       return { value: state.value, isTouched: true };
-    case "RESET":
-      return { value: "", isTouched: false };
+    case 'RESET':
+      return { value: '', isTouched: false };
     default:
       return initialInputState;
   }
@@ -56,15 +56,15 @@ const useInput = (validator: IValidatorFn): IUseInput => {
   const hasError = !valueIsValid && inputState.isTouched;
 
   const inputChangeHandler: IFormInputHandler = (event) => {
-    dispatch({ type: "INPUT", value: event.currentTarget.value });
+    dispatch({ type: 'INPUT', value: event.currentTarget.value });
   };
 
   const inputBlurHandler: IFormInputHandler = (event) => {
-    dispatch({ type: "BLUR" });
+    dispatch({ type: 'BLUR' });
   };
 
   const reset: () => void = () => {
-    dispatch({ type: "RESET" });
+    dispatch({ type: 'RESET' });
   };
 
   const value = inputState.value;
